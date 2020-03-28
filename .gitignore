@@ -1,3 +1,6 @@
+/.idea/
+/testResults/
+
 composer.phar
 /vendor/
 
