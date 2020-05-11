@@ -56,10 +56,12 @@ class Range implements RangeInterface
      * @param $start
      * @param $end
      * @param  MarginsInclusionMode $mode Which margin is included to the range created
+     *      If $mode is null then MarginsInclusionMode::INCLUDE_BOTH is created and used
      * @return RangeInterface
      */
     public static function between($start, $end, MarginsInclusionMode $mode = null): RangeInterface
     {
+        return new self($start, $end, (null === $mode) ? MarginsInclusionMode::BOTH(): $mode);
     }
 
     /**
@@ -70,7 +72,7 @@ class Range implements RangeInterface
      */
     public static function greaterThan($value): RangeInterface
     {
-
+        return self::between($value, INF, MarginsInclusionMode::NONE());
     }
 
     /**
@@ -81,7 +83,7 @@ class Range implements RangeInterface
      */
     public static function greaterOrEqualThan($value): RangeInterface
     {
-
+        return self::between($value, INF, MarginsInclusionMode::START());
     }
 
     /**
@@ -92,7 +94,7 @@ class Range implements RangeInterface
      */
     public static function lessThan($value): RangeInterface
     {
-
+        return self::between(-INF, $value, MarginsInclusionMode::NONE());
     }
 
     /**
@@ -103,7 +105,7 @@ class Range implements RangeInterface
      */
     public static function lessOrEqualThan($value): RangeInterface
     {
-
+        return self::between(-INF, $value, MarginsInclusionMode::END());
     }
 
     #endregion factory methods

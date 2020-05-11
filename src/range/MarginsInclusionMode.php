@@ -13,9 +13,10 @@ namespace maxlzp\range\range;
 final class MarginsInclusionMode
 {
     #region constants
-    const INCLUDE_BOTH = 0;
+    const INCLUDE_NONE = 0;
     const INCLUDE_START = 1;
     const INCLUDE_END = 2;
+    const INCLUDE_BOTH = 3;
     #endregion constants
 
     #region fields
@@ -59,6 +60,16 @@ final class MarginsInclusionMode
     }
 
     /**
+     * Create mode with end-margin included
+     *
+     * @return MarginsInclusionMode
+     */
+    public static function NONE(): MarginsInclusionMode
+    {
+        return new self(self::INCLUDE_NONE);
+    }
+
+    /**
      * Create mode with start-margin included
      *
      * @return MarginsInclusionMode
@@ -76,6 +87,15 @@ final class MarginsInclusionMode
     public function areBothIncluded(): bool
     {
         return $this->mode === self::INCLUDE_BOTH;
+    }
+
+    /**
+     * Checks if none margins are included in the range
+     * @return bool
+     */
+    public function areNoneIncluded(): bool
+    {
+        return $this->mode === self::INCLUDE_NONE;
     }
 
     /**
