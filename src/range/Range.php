@@ -6,6 +6,7 @@
 
 namespace maxlzp\range\range;
 
+use maxlzp\range\margin\MarginFactory;
 use maxlzp\range\margin\MarginInterface;
 
 /**
@@ -14,12 +15,6 @@ use maxlzp\range\margin\MarginInterface;
  */
 class Range implements RangeInterface
 {
-    #region constants
-    const INCLUDE_BOTH = 0;
-    const INCLUDE_START = 1;
-    const INCLUDE_END = 2;
-    #endregion constants
-
     #region fields
 
     /**
@@ -36,8 +31,6 @@ class Range implements RangeInterface
      * @var int Defines which margin is included to the range
      */
     protected $marginsIncludeMode;
-
-
     #endregion fields
 
     #region constructor
@@ -45,12 +38,12 @@ class Range implements RangeInterface
      * Range constructor.
      * @param $start
      * @param $end
-     * @param int $mode Which margin is included to the range created
+     * @param MarginsInclusionMode $mode Which margin is included to the range created
      */
-    protected function __construct($start, $end, $mode = Range::INCLUDE_BOTH)
+    protected function __construct($start, $end, MarginsInclusionMode $mode)
     {
-        $this->start = $start;
-        $this->end = $end;
+        $this->start = MarginFactory::create($start);
+        $this->end = MarginFactory::create($end);
         $this->marginsIncludeMode = $mode;
     }
     #endregion constructor
@@ -62,10 +55,10 @@ class Range implements RangeInterface
      *
      * @param $start
      * @param $end
-     * @param int $mode Which margin is included to the range created
+     * @param  MarginsInclusionMode $mode Which margin is included to the range created
      * @return RangeInterface
      */
-    public static function between($start, $end, $mode = Range::INCLUDE_BOTH): RangeInterface
+    public static function between($start, $end, MarginsInclusionMode $mode = null): RangeInterface
     {
     }
 
@@ -235,5 +228,9 @@ class Range implements RangeInterface
     }
 
     #endregion RangeInterface implementation
+
+
+    #region protected methods
+    #endregion protected methods
 
 }
